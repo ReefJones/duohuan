@@ -58,7 +58,7 @@ export default function Cloakroom() {
           </svg>
         </div>
       </div>
-      <div className={`w-full h-full bg-cover bg-no-repeat rounded-3xl duration-500 ${isLoading?"opacity-0":""}`} style={{backgroundImage: `url(${BgConfig.backgroundImage})`}}>
+      <div className={`bg-cover bg-no-repeat duration-500 ${styles.bgContainer} ${isLoading?"opacity-0":""}`} style={{backgroundImage: `url(${BgConfig.backgroundImage})`}}>
         <div>
           <div className={`fixed w-20 h-20 ${isLoading?"":styles.slideInLeft}`}>
             <FloatCard haveLayout="odel wearing plain">
@@ -190,7 +190,7 @@ export default function Cloakroom() {
             </div>
           </div>
         </div>
-        <div className="absolute top-0 right-0 w-64 h-28 mt-5 flex justify-center items-center overflow-hidden">
+        <div className="absolute top-6 right-6 w-64 h-28 mt-5 flex justify-center items-center overflow-hidden">
           <Link href={"/product/1"} className={`relative px-8 py-6 text-3xl overflow-hidden ${styles.LightEdgeBtn_w}`} >
             Buy Now
           </Link>
