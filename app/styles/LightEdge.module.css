@@ -112,19 +112,18 @@
 
     width: 10rem;
     height: 10rem;
-    background: #191919;
+    background: #000000;
     border: 1px solid #FFFFF0;
     
     filter: drop-shadow(0 0 5px #FFFFF0) drop-shadow(0 0 5px #FFFFF0);
     transition: 0.5s, background 0.5s;
     transition-delay: .75s,.75s;
-    animation: breathe 4s linear infinite;
+    animation: breathe 2.5s linear infinite;
 }
 
 @keyframes breathe{
     0% {border: 1px solid #FFFFF0; filter: drop-shadow(0 0 5px #FFFFF0) drop-shadow(0 0 5px #FFFFF0);}
-    45% {border: 1px solid #191919; filter: none}
-    55% {border: 1px solid #191919; filter: none}
+    50% {border: 1px solid #000000; filter: none}
     100% {border: 1px solid #FFFFF0; filter: drop-shadow(0 0 5px #FFFFF0) drop-shadow(0 0 5px #FFFFF0);}
 }
 

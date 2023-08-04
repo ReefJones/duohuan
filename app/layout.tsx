@@ -1,3 +1,6 @@
+"use client";
+
+import { Providers } from "./redux/provider";
 import './globals.css'
 import { Inter } from 'next/font/google'
 
@@ -17,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`flex justify-center items-center min-h-screen ${inter.className}`} style={{background: "#151515"}}>
         <div className="flex justify-center items-center containerLightEdge">
-          {children}
+          <Providers>{children}</Providers>
         </div>
       </body>
     </html>

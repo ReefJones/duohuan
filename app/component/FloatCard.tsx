@@ -7,6 +7,11 @@ export default function FloatCard({cardType, haveLayout, noBorder, handleClick, 
   const [cardTypeCss, setCardTypeCss] = useState<string>(styles.FloatCard);
   const [customBorderCss, setCustomBorderCss] = useState<string>("");
   
+  const onButtonClick = (event : any) =>{
+    if(handleClick){
+      handleClick(event);
+    }
+  }
 
   useEffect(() => {
     if (cardType === 'text') {
@@ -18,7 +23,7 @@ export default function FloatCard({cardType, haveLayout, noBorder, handleClick, 
   }, []);
 
   return (
-    <div className={`relative w-full h-full ${cardType === 'text'? styles.FloatCardBackLight : ""}`}>
+    <div className={`relative w-full h-full ${cardType === 'text'? styles.FloatCardBackLight : ""}`} onClick={onButtonClick}>
       <div className={`relative w-full h-full p-4 text-white ${cardTypeCss +" "+ customBorderCss}`}>
         {children}
       </div>

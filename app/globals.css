@@ -57,8 +57,9 @@ body {
   right: -10px;
   bottom: -10px;
   border-radius: 5rem;
-  border: 40px solid #FFFFF0;
-  box-shadow: 0 0 20px #FFFFF0, 0 0 10px #FFFFF0 inset;
+  border: 30px solid #FFFFF0;
+  background: #000000;
+  box-shadow: 0 0 20px #FFFFF0, 0 0 40px #FFFFF0 inset;
   z-index: -1;
 }
 
