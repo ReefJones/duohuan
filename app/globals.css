@@ -59,7 +59,7 @@ body {
   border-radius: 5rem;
   border: 30px solid #FFFFF0;
   background: #000000;
-  box-shadow: 0 0 20px #FFFFF0, 0 0 40px #FFFFF0 inset;
+  box-shadow: 0 0 20px #FFFFF0, 0 0 30px #FFFFF0 inset;
   z-index: -1;
 }
 
