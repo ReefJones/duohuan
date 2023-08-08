@@ -121,6 +121,7 @@ export default function Cloakroom() {
   useEffect(() => {
     if (generatedImages.length > 0) {
       setBgConfig(`data:image/png;base64,${generatedImages[0]}`);
+      console.log(generatedImages[0]);
       setProgressNum(0);
       setLeftPercentage(-100);
       clearInterval(intervalId!);
