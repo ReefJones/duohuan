@@ -35,12 +35,12 @@ const product = {
 export default function Cloakroom() {
   const [menuTxt, setMenuTxt] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
-  // const [sdModel, setSdModel] = useState("Realistic_Vision_V2.0-inpainting.ckpt [73c461d2cf]");
-  // const [prompt, setPrompt] = useState("1girl,cute");
-  // const [negative_prompt, setNegativePrompt] = useState("");
-  // const [samplingMethod, setSamplingMethod] = useState<string>("Euler a");
-  // const [height, setHeight] = useState<number>(1024);
-  // const [width, setWidth] = useState<number>(512);
+  const [sdModel, setSdModel] = useState("Realistic_Vision_V2.0-inpainting.ckpt [73c461d2cf]");
+  const [prompt, setPrompt] = useState("1girl,cute");
+  const [negative_prompt, setNegativePrompt] = useState("");
+  const [samplingMethod, setSamplingMethod] = useState<string>("Euler a");
+  const [height, setHeight] = useState<number>(1024);
+  const [width, setWidth] = useState<number>(512);
   const [restoreFase, setRestoreFase] = useState<boolean>(false);
   const [tiling, setTiling] = useState<boolean>(false);
   const [steps, setSteps] = useState<number>(20);
@@ -99,11 +99,11 @@ export default function Cloakroom() {
     dispatch(
       setSettings(
         { ...settings, 
-          prompt: process.env.NEXT_PUBLIC_Prompt? process.env.NEXT_PUBLIC_Prompt : "",
-          negative_prompt: process.env.NEXT_PUBLIC_NegativePrompt? process.env.NEXT_PUBLIC_NegativePrompt : "",
-          sampler_index: process.env.NEXT_PUBLIC_SamplingMethod? process.env.NEXT_PUBLIC_SamplingMethod : "",
-          width: process.env.NEXT_PUBLIC_Width? parseInt(process.env.NEXT_PUBLIC_Width) : "",
-          height: process.env.NEXT_PUBLIC_Height? parseInt(process.env.NEXT_PUBLIC_Height) : "",
+          prompt: prompt,
+          negative_prompt: negative_prompt,
+          sampler_index: samplingMethod,
+          width: width,
+          height: height,
           steps: steps,
           restore_faces: restoreFase,
           tiling: tiling,
@@ -111,7 +111,7 @@ export default function Cloakroom() {
           batch_size: batchSize,
           seed: seeds,
           override_settings: {
-            sd_model_checkpoint: process.env.NEXT_PUBLIC_SdModel? process.env.NEXT_PUBLIC_SdModel : "",
+            sd_model_checkpoint: sdModel,
           }
         })
     );
