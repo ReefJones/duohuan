@@ -35,15 +35,15 @@ const product = {
 export default function Cloakroom() {
   const [menuTxt, setMenuTxt] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
-  const [sdModel, setSdModel] = useState("Realistic_Vision_V2.0-inpainting");
-  const [prompt, setPrompt] = useState("1girl,cute");
-  const [negative_prompt, setNegativePrompt] = useState("");
-  const [samplingMethod, setSamplingMethod] = useState<string>("Euler a");
-  const [steps, setSteps] = useState<number>(20);
+  // const [sdModel, setSdModel] = useState("Realistic_Vision_V2.0-inpainting.ckpt [73c461d2cf]");
+  // const [prompt, setPrompt] = useState("1girl,cute");
+  // const [negative_prompt, setNegativePrompt] = useState("");
+  // const [samplingMethod, setSamplingMethod] = useState<string>("Euler a");
+  // const [height, setHeight] = useState<number>(1024);
+  // const [width, setWidth] = useState<number>(512);
   const [restoreFase, setRestoreFase] = useState<boolean>(false);
   const [tiling, setTiling] = useState<boolean>(false);
-  const [height, setHeight] = useState<number>(1024);
-  const [width, setWidth] = useState<number>(512);
+  const [steps, setSteps] = useState<number>(20);
   const [batchCount, setBatchCount] = useState<number>(1);
   const [batchSize, setBatchSize] = useState<number>(1);
   const [seeds, setSeeds] = useState<number>(-1);
@@ -55,15 +55,6 @@ export default function Cloakroom() {
   const settings = useSelector((state) => state.txt2img.settings);
   const setSettings = setTxt2imgSettings;
   const dispatch = useDispatch();
-
-  const {
-    result: result2,
-    loading: loading2,
-    setOptions,
-  } = useOptions({
-    url: process.env.NEXT_PUBLIC_Url? process.env.NEXT_PUBLIC_Url : "",
-    port: "",
-  });
 
   const {
     images: generatedImages,
@@ -105,23 +96,23 @@ export default function Cloakroom() {
 
   // 初始化SD参数
   useEffect(() => {
-    setOptions({
-      sd_model_checkpoint: sdModel,
-    });
     dispatch(
       setSettings(
         { ...settings, 
-          prompt: prompt,
-          negative_prompt: negative_prompt,
-          sampler_index: samplingMethod,
+          prompt: process.env.NEXT_PUBLIC_Prompt? process.env.NEXT_PUBLIC_Prompt : "",
+          negative_prompt: process.env.NEXT_PUBLIC_NegativePrompt? process.env.NEXT_PUBLIC_NegativePrompt : "",
+          sampler_index: process.env.NEXT_PUBLIC_SamplingMethod? process.env.NEXT_PUBLIC_SamplingMethod : "",
+          width: process.env.NEXT_PUBLIC_Width? parseInt(process.env.NEXT_PUBLIC_Width) : "",
+          height: process.env.NEXT_PUBLIC_Height? parseInt(process.env.NEXT_PUBLIC_Height) : "",
           steps: steps,
           restore_faces: restoreFase,
           tiling: tiling,
-          height: height,
-          width: width,
           n_iter: batchCount,
           batch_size: batchSize,
           seed: seeds,
+          override_settings: {
+            sd_model_checkpoint: process.env.NEXT_PUBLIC_SdModel? process.env.NEXT_PUBLIC_SdModel : "",
+          }
         })
     );
   }, []);
