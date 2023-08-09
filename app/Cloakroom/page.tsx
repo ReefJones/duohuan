@@ -40,10 +40,11 @@ export default function Cloakroom() {
   const [negative_prompt, setNegativePrompt] = useState("");
   const [samplingMethod, setSamplingMethod] = useState<string>("Euler a");
   const [height, setHeight] = useState<number>(1024);
-  const [width, setWidth] = useState<number>(512);
+  const [width, setWidth] = useState<number>(1280);
   const [restoreFase, setRestoreFase] = useState<boolean>(false);
   const [tiling, setTiling] = useState<boolean>(false);
-  const [steps, setSteps] = useState<number>(20);
+  const [enableHr, setEnableHr] = useState<boolean>(false);
+  const [steps, setSteps] = useState<number>(35);
   const [batchCount, setBatchCount] = useState<number>(1);
   const [batchSize, setBatchSize] = useState<number>(1);
   const [seeds, setSeeds] = useState<number>(-1);
@@ -107,6 +108,7 @@ export default function Cloakroom() {
           steps: steps,
           restore_faces: restoreFase,
           tiling: tiling,
+          enable_hr: enableHr,
           n_iter: batchCount,
           batch_size: batchSize,
           seed: seeds,
