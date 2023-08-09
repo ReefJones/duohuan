@@ -2,7 +2,9 @@
 
 import { Txt2imgInterface } from "../../../app/Types/txt2img";
 import { NextRequest } from "next/server";
+import axios from "axios";
 import * as _ from "lodash"
+
 
 export async function POST(req: NextRequest) {
   const { sdUrl, args } = await req.json();
@@ -37,16 +39,17 @@ export async function POST(req: NextRequest) {
     });
   }
   //  发送请求
-  const txt2imgResponse = await fetch(`${sdUrl}/sdapi/v1/txt2img`, {
+  const txt2imgResponse = await axios(`${sdUrl}/sdapi/v1/txt2img`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "Authorization": process.env.NEXT_PUBLIC_Authorization? process.env.NEXT_PUBLIC_Authorization : ''
     },
-    body: JSON.stringify(body),
+    data: JSON.stringify(body),
+    timeout: 120000,
   });
 
-  const txt2imgResponseJson = await txt2imgResponse.json();
+  const txt2imgResponseJson = await txt2imgResponse.data;
 
   // console.log("txt2imgResponseJson in api", txt2imgResponseJson);
   //  返回错误
