@@ -3,10 +3,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "../hook/useSelector.hook";
-import { useOptions } from "../hook/useOptions.hook";
 import { useTxt2img } from "../hook/useTxt2img.hook";
-import { useProgress } from "../hook/useProgress.hook";
-import { setSettings as setTxt2imgSettings } from "../redux/Features/Txt2imgState/Txt2imgSlice";
+import { useImg2img } from "../hook/useImg2img.hook";
+import { setSettings as setImg2imgSettings } from "../redux/Features/Img2imgState/Img2imgSlice";
 import { FaceSmileIcon, HeartIcon, ClipboardIcon, UserIcon, UsersIcon } from '@heroicons/react/24/outline'
 import MenuButtonList from "../component/MenuButtonList";
 import FloatCard from "../component/FloatCard";
@@ -35,39 +34,23 @@ const product = {
 export default function Cloakroom() {
   const [menuTxt, setMenuTxt] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
-  const [sdModel, setSdModel] = useState("Realistic_Vision_V2.0-inpainting.ckpt [73c461d2cf]");
-  const [prompt, setPrompt] = useState("1girl,cute");
-  const [negative_prompt, setNegativePrompt] = useState("");
-  const [samplingMethod, setSamplingMethod] = useState<string>("Euler a");
-  const [height, setHeight] = useState<number>(1024);
-  const [width, setWidth] = useState<number>(1280);
-  const [restoreFase, setRestoreFase] = useState<boolean>(false);
-  const [tiling, setTiling] = useState<boolean>(false);
-  const [enableHr, setEnableHr] = useState<boolean>(false);
-  const [steps, setSteps] = useState<number>(35);
-  const [batchCount, setBatchCount] = useState<number>(1);
-  const [batchSize, setBatchSize] = useState<number>(1);
-  const [seeds, setSeeds] = useState<number>(-1);
   const [BgConfig, setBgConfig] = useState<string>('/bg_girl.png');
-  const [result, setResult] = useState<any>(null);
-  const [progressNum, setProgressNum] = useState<number>(0);
-  const [leftPercentage, setLeftPercentage] = useState<number>(-100);
-  const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
-  const settings = useSelector((state) => state.txt2img.settings);
-  const setSettings = setTxt2imgSettings;
+  const settings = useSelector((state) => state.img2img.settings);
+  const setSettings = setImg2imgSettings;
   const dispatch = useDispatch();
 
   const {
     images: generatedImages,
-    loading,
-    error,
     txt2img,
   } = useTxt2img({
     url: process.env.NEXT_PUBLIC_Url? process.env.NEXT_PUBLIC_Url : "",
     port: "",
   });
 
-  const { query, result: result4 } = useProgress({
+  const {
+    images: generatedImages2,
+    img2img,
+  } = useImg2img({
     url: process.env.NEXT_PUBLIC_Url? process.env.NEXT_PUBLIC_Url : "",
     port: "",
   });
@@ -81,11 +64,8 @@ export default function Cloakroom() {
   };
 
   const handleTxt2imgClick = () => {
+    setIsLoading(true);
     txt2img();
-    const id = setInterval(() => {
-      query();
-    }, 1000);
-    setIntervalId(id);
   };
 
   useEffect(() => {
@@ -95,55 +75,33 @@ export default function Cloakroom() {
     return () => clearTimeout(timer);
   }, [])
 
-  // 初始化SD参数
-  useEffect(() => {
-    dispatch(
-      setSettings(
-        { ...settings, 
-          prompt: prompt,
-          negative_prompt: negative_prompt,
-          sampler_index: samplingMethod,
-          width: width,
-          height: height,
-          steps: steps,
-          restore_faces: restoreFase,
-          tiling: tiling,
-          enable_hr: enableHr,
-          n_iter: batchCount,
-          batch_size: batchSize,
-          seed: seeds,
-          override_settings: {
-            sd_model_checkpoint: sdModel,
-          }
-        })
-    );
-  }, []);
-
   //监听SD文转图接口返回
   useEffect(() => {
     if (generatedImages.length > 0) {
-      setBgConfig(`data:image/png;base64,${generatedImages[0]}`);
-      console.log(generatedImages[0]);
-      setProgressNum(0);
-      setLeftPercentage(-100);
-      clearInterval(intervalId!);
+      dispatch(
+        setSettings(
+          { ...settings, 
+            init_images: generatedImages,
+          })
+      );
     }
   }, [generatedImages]);
 
+  //监听图片传入成功后调用图生图
   useEffect(() => {
-    if (result4) {
-      setResult(result4);
+    if (settings.init_images.length > 0 && settings.init_images[0] !== "") {
+      img2img();
     }
-  }, [result4]);
+  }, [settings]);
 
-  //监听SD进度接口返回
+  //监听SD文转图接口返回
   useEffect(() => {
-    if (result) {
-      setProgressNum(result.progress.toFixed(2) * 100);
-      setLeftPercentage((1-result.progress) * (-100));
+    if (generatedImages2.length > 0) {
+      setBgConfig(`data:image/png;base64,${generatedImages2[0]}`);
+      setIsLoading(false);
     }
-  }, [result]);
-  
+  }, [generatedImages2]);
+
   return (
     <> 
       <div className={`${styles.loaderBg} ${isLoading?"":"opacity-0"}`}>
@@ -153,18 +111,6 @@ export default function Cloakroom() {
           </svg>
         </div>
       </div>
-      {loading && (
-        <div className={`${styles.loaderBg} ${styles.bgMask}`}>
-          <div className={`${styles.svgLoader}`}>
-            <div className="w-4/5 h-6 relative overflow-hidden mx-auto mt-2" style={{background:"#151515"}}>
-              <div className="w-full h-6 absolute overflow-hidden mx-auto bg-slate-50" style={{left:`${leftPercentage}%`}}></div>
-              <div className="w-auto h-6 leading-6 absolute overflow-hidden mx-auto right-3 text-white text-sm">
-                {progressNum}%
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
       <div className={`bg-cover bg-no-repeat duration-500 ${styles.bgContainer} ${isLoading?"opacity-0":""}`} style={{backgroundImage: `url(${BgConfig})`}}>
         <div>
           <div className={`fixed w-20 h-20 ${isLoading?"":styles.slideInLeft}`}>

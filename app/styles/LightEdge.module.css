@@ -343,6 +343,7 @@
     color: #FFFFF0;
     border: 3px solid #FFFFF0;
     backdrop-filter: blur(5px);
+    filter: drop-shadow(0 0 1px #FFFFF0) drop-shadow(0 0 3px #FFFFF0);
     transition: 0.2s;
 }
 
@@ -368,7 +369,7 @@
 
 .FloatCard:hover {
     transition: .5s;
-    filter: drop-shadow(0 0 5px #FFFFF0) drop-shadow(0 0 10px #FFFFF0);
+    filter: drop-shadow(0 0 10px #FFFFF0) drop-shadow(0 0 15px #FFFFF0);
 }
 
 /* .FloatCard:hover:after, .FloatCard:hover:before {
