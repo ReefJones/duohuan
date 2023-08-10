@@ -5,7 +5,9 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "../hook/useSelector.hook";
 import { useTxt2img } from "../hook/useTxt2img.hook";
 import { useImg2img } from "../hook/useImg2img.hook";
+import { useRembg } from "../hook/useRembg.hook";
 import { setSettings as setImg2imgSettings } from "../redux/Features/Img2imgState/Img2imgSlice";
+import { setSettings as setRembgSettings } from "../redux/Features/rembg/rembgSlice";
 import { FaceSmileIcon, HeartIcon, ClipboardIcon, UserIcon, UsersIcon } from '@heroicons/react/24/outline'
 import MenuButtonList from "../component/MenuButtonList";
 import FloatCard from "../component/FloatCard";
@@ -34,13 +36,16 @@ const product = {
 export default function Cloakroom() {
   const [menuTxt, setMenuTxt] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
-  const [BgConfig, setBgConfig] = useState<string>('/bg_girl.png');
+  const [BgConfig, setBgConfig] = useState<string>("");
   const settings = useSelector((state) => state.img2img.settings);
   const setSettings = setImg2imgSettings;
+  const rembg_settings = useSelector((state) => state.rembg.settings);
+  const rembg_setSettings = setRembgSettings;
   const dispatch = useDispatch();
 
   const {
     images: generatedImages,
+    loading,
     txt2img,
   } = useTxt2img({
     url: process.env.NEXT_PUBLIC_Url? process.env.NEXT_PUBLIC_Url : "",
@@ -49,8 +54,18 @@ export default function Cloakroom() {
 
   const {
     images: generatedImages2,
+    loading: loading2,
     img2img,
   } = useImg2img({
+    url: process.env.NEXT_PUBLIC_Url? process.env.NEXT_PUBLIC_Url : "",
+    port: "",
+  });
+
+  const {
+    images: generatedImages3,
+    loading: loading3,
+    rembg,
+  } = useRembg({
     url: process.env.NEXT_PUBLIC_Url? process.env.NEXT_PUBLIC_Url : "",
     port: "",
   });
@@ -64,7 +79,6 @@ export default function Cloakroom() {
   };
 
   const handleTxt2imgClick = () => {
-    setIsLoading(true);
     txt2img();
   };
 
@@ -94,13 +108,31 @@ export default function Cloakroom() {
     }
   }, [settings]);
 
-  //监听SD文转图接口返回
+  //监听SD图生图接口返回
   useEffect(() => {
     if (generatedImages2.length > 0) {
-      setBgConfig(`data:image/png;base64,${generatedImages2[0]}`);
-      setIsLoading(false);
+      dispatch(
+        rembg_setSettings(
+          { ...rembg_settings, 
+            input_image: generatedImages2[0],
+          })
+      );
     }
   }, [generatedImages2]);
+
+  //监听图片传入成功后调用去除背景
+  useEffect(() => {
+    if (rembg_settings.input_image.length > 0 && rembg_settings.input_image[0] !== "") {
+      rembg();
+    }
+  }, [rembg_settings]);
+
+  //监听SD文转图接口返回
+  useEffect(() => {
+    if (generatedImages3) {
+      setBgConfig(`data:image/png;base64,${generatedImages3}`);
+    }
+  }, [generatedImages3]);
 
   return (
     <> 
@@ -111,6 +143,15 @@ export default function Cloakroom() {
           </svg>
         </div>
       </div>
+      {(loading || loading2 || loading3) && (
+        <div className={`${styles.loaderBg} ${styles.bgMask}`}>
+          <div className={`${styles.svgLoader}`}>
+            <svg viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45"></circle>
+            </svg>
+          </div>
+        </div>
+      )}
       <div className={`bg-cover bg-no-repeat duration-500 ${styles.bgContainer} ${isLoading?"opacity-0":""}`} style={{backgroundImage: `url(${BgConfig})`}}>
         <div>
           <div className={`fixed w-20 h-20 ${isLoading?"":styles.slideInLeft}`}>
