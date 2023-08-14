@@ -34,10 +34,10 @@ export async function POST(req: NextRequest) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": process.env.NEXT_PUBLIC_Authorization? process.env.NEXT_PUBLIC_Authorization : ''
+      "Authorization": process.env.NEXT_PUBLIC_Authorization ? process.env.NEXT_PUBLIC_Authorization : ''
     },
     data: JSON.stringify(body),
-    timeout: 120000,
+    timeout: 600000, // 设置超时时间为10分钟（600,000毫秒）
   });
 
   const img2imgResponseJson = await img2imgResponse.data;
