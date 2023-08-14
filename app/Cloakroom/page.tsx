@@ -6,8 +6,10 @@ import { useSelector } from "../hook/useSelector.hook";
 import { useTxt2img } from "../hook/useTxt2img.hook";
 import { useImg2img } from "../hook/useImg2img.hook";
 import { useRembg } from "../hook/useRembg.hook";
+import { useExtrasSingleImage } from "../hook/useExtrasSingleImage.hook"
 import { setSettings as setImg2imgSettings } from "../redux/Features/Img2imgState/Img2imgSlice";
 import { setSettings as setRembgSettings } from "../redux/Features/rembg/rembgSlice";
+import { setSettings as setExtrasSingleImageSettings } from "../redux/Features/ExtrasSingleImage/ExtrasSingleImageslice";
 import { FaceSmileIcon, HeartIcon, ClipboardIcon, UserIcon, UsersIcon } from '@heroicons/react/24/outline'
 import MenuButtonList from "../component/MenuButtonList";
 import FloatCard from "../component/FloatCard";
@@ -17,34 +19,36 @@ import Link from "next/link";
 
 
 const product = {
-  cards:[
+  cards: [
     {
       title: "Trending Design",
-      details: "Lorem ipsum dolor amet, consectetur adipiscing elit augue diam, accumsan  ipsum dolor sit amet, consectetur adipiscing."
+      details: "Exploring the latest design trends and innovative approaches in the industry."
     },
     {
       title: "Smart Applications",
-      details: "Lorem ipsum dolor amet, consectetur adipiscing elit augue diam, accumsan  ipsum dolor sit amet, consectetur adipiscing."
+      details: "Discovering intelligent applications that leverage cutting-edge technologies and enhance user experiences."
     },
     {
-      title: "Easy Installation",
-      details: "Lorem ipsum dolor amet, consectetur adipiscing elit augue diam, accumsan  ipsum dolor sit amet, consectetur adipiscing."
-    },
+      title: "Frontier science and technology",
+      details: "Exploring cutting-edge AI advancements that reshape industries"
+    }
   ]
 }
 
 export default function Cloakroom() {
   const [menuTxt, setMenuTxt] = useState<string>("");
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [BgConfig, setBgConfig] = useState<string>("");
-  const settings = useSelector((state) => state.img2img.settings);
-  const setSettings = setImg2imgSettings;
+  // const settings = useSelector((state) => state.img2img.settings);
+  // const setSettings = setImg2imgSettings;
+  const settings = useSelector((state) => state.extrasSingleImage.settings);
+  const setSettings = setExtrasSingleImageSettings;
   const rembg_settings = useSelector((state) => state.rembg.settings);
   const rembg_setSettings = setRembgSettings;
   const dispatch = useDispatch();
 
   const {
-    images: generatedImages,
+    images: txt2imgBackImages,
     loading,
     txt2img,
   } = useTxt2img({
@@ -52,17 +56,26 @@ export default function Cloakroom() {
     port: "",
   });
 
+  // const {
+  //   images: img2imgBackImages,
+  //   loading: loading2,
+  //   img2img,
+  // } = useImg2img({
+  //   url: process.env.NEXT_PUBLIC_Url? process.env.NEXT_PUBLIC_Url : "",
+  //   port: "",
+  // });
+
   const {
-    images: generatedImages2,
+    images: ExtrasBackImages,
     loading: loading2,
-    img2img,
-  } = useImg2img({
+    ExtrasSingleImage,
+  } = useExtrasSingleImage({
     url: process.env.NEXT_PUBLIC_Url? process.env.NEXT_PUBLIC_Url : "",
     port: "",
   });
 
   const {
-    images: generatedImages3,
+    images: rembgBackImages,
     loading: loading3,
     rembg,
   } = useRembg({
@@ -82,43 +95,43 @@ export default function Cloakroom() {
     txt2img();
   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
-    return () => clearTimeout(timer);
-  }, [])
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 3000);
+  //   return () => clearTimeout(timer);
+  // }, [])
 
   //监听SD文转图接口返回
   useEffect(() => {
-    if (generatedImages.length > 0) {
+    if (txt2imgBackImages.length > 0) {
       dispatch(
         setSettings(
           { ...settings, 
-            init_images: generatedImages,
+            image: txt2imgBackImages[0],
           })
       );
     }
-  }, [generatedImages]);
+  }, [txt2imgBackImages]);
 
-  //监听图片传入成功后调用图生图
+  //监听图片传入成功后调用放大图片接口
   useEffect(() => {
-    if (settings.init_images.length > 0 && settings.init_images[0] !== "") {
-      img2img();
+    if (settings.image.length > 0 && settings.image[0] !== "") {
+      ExtrasSingleImage();
     }
   }, [settings]);
 
-  //监听SD图生图接口返回
+  //监听SD放大图片接口返回
   useEffect(() => {
-    if (generatedImages2.length > 0) {
+    if (ExtrasBackImages.length > 0) {
       dispatch(
         rembg_setSettings(
           { ...rembg_settings, 
-            input_image: generatedImages2[0],
+            input_image: ExtrasBackImages[0],
           })
       );
     }
-  }, [generatedImages2]);
+  }, [ExtrasBackImages]);
 
   //监听图片传入成功后调用去除背景
   useEffect(() => {
@@ -127,12 +140,31 @@ export default function Cloakroom() {
     }
   }, [rembg_settings]);
 
-  //监听SD文转图接口返回
+  //监听rembg插件接口返回
   useEffect(() => {
-    if (generatedImages3) {
-      setBgConfig(`data:image/png;base64,${generatedImages3}`);
+    if (rembgBackImages) {
+      setBgConfig(`data:image/png;base64,${rembgBackImages}`);
     }
-  }, [generatedImages3]);
+  }, [rembgBackImages]);
+
+      //监听图片传入成功后调用图生图
+  // useEffect(() => {
+  //   if (settings.init_images.length > 0 && settings.init_images[0] !== "") {
+  //     img2img();
+  //   }
+  // }, [settings]);
+
+  // //监听SD图生图接口返回
+  // useEffect(() => {
+  //   if (generatedImages2.length > 0) {
+  //     dispatch(
+  //       rembg_setSettings(
+  //         { ...rembg_settings, 
+  //           input_image: generatedImages2[0],
+  //         })
+  //     );
+  //   }
+  // }, [generatedImages2]);
 
   return (
     <> 
@@ -294,3 +326,4 @@ export default function Cloakroom() {
     </>
   );
 }
+

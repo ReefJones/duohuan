@@ -17,21 +17,26 @@ interface Txt2imgState {
 const initialState: Txt2imgState = {
   url: "",
   settings: {
-    prompt: "1girl,cute",
-    negative_prompt: "",
-    sampler_index: "Euler a",
-    width: 1280,
-    height: 1024,
-    steps: 20,
-    restore_faces: false,
-    tiling: false,
-    enable_hr: false,
-    n_iter: 1,
-    batch_size: 1,
-    seed: -1,
+    prompt: "(a portrait of a asian woman:1.2), ([large clothes : (large patches:1.2)]:1.4), (low contract:1.1),full body,solo, realism, professional photo, studio shot, fashion, (simple background:1.3), detailed, (neo-futurism:1.18), (futurism:0.8)",
+    negative_prompt: "child, big breasts, (3d, illustration, cartoon, painting:1.2), black and white, ugly, oversaturated, blurry",
+    sampler_index: "DPM++ SDE Karras", // 采样方法
+    width: 1024, // 宽度
+    height: 1280, // 高度
+    steps: 35, // 生成步数
+    tiling: false, // 可平埔
+    enable_hr: false, // 高清修复
+    restore_faces: true, // 脸部修复
+    n_iter: 1, // 生成批次
+    batch_size: 1, // 每批张数
+    cfg_scale: 7, // 提示词相关性
+    denoising_strength: 0, // 去噪强度
+    seed: -1, // 种子数
     override_settings: {
-      sd_model_checkpoint: "Realistic_Vision_V2.0-inpainting.ckpt [73c461d2cf]",
-    }
+      sd_model_checkpoint: "SDXL/sd_xl_base_1.0.safetensors [31e35c80fc]",
+    }, // 使用模型
+    script_args: [
+
+    ], // 使用插件
   },
   status: "idle",
   result: {},
