@@ -127,7 +127,7 @@ export default function Cloakroom() {
       dispatch(
         rembg_setSettings(
           { ...rembg_settings, 
-            input_image: ExtrasBackImages[0],
+            input_image: ExtrasBackImages,
           })
       );
     }
