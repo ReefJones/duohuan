@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
     // 拼接文件保存路径
     const filePath = path.join(txt2imgImagesDir, fileName);
     // 将图片数据写入文件
-    fs.writeFile(filePath, imageBuffer, (err) => {
+    fs.writeFile(filePath, imageBuffer, (err: any) => {
       if (err) {
         console.error(`保存图片 ${fileName} 失败:`, err);
       } else {
