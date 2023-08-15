@@ -49,7 +49,7 @@ export default function Cloakroom() {
 
   const {
     images: txt2imgBackImages,
-    loading,
+    loading: txt2imgBackLoading,
     txt2img,
   } = useTxt2img({
     url: process.env.NEXT_PUBLIC_Url? process.env.NEXT_PUBLIC_Url : "",
@@ -58,7 +58,7 @@ export default function Cloakroom() {
 
   // const {
   //   images: img2imgBackImages,
-  //   loading: loading2,
+  //   loading: img2imgBackLoading,
   //   img2img,
   // } = useImg2img({
   //   url: process.env.NEXT_PUBLIC_Url? process.env.NEXT_PUBLIC_Url : "",
@@ -67,7 +67,7 @@ export default function Cloakroom() {
 
   const {
     images: ExtrasBackImages,
-    loading: loading2,
+    loading: ExtrasBackLoading,
     ExtrasSingleImage,
   } = useExtrasSingleImage({
     url: process.env.NEXT_PUBLIC_Url? process.env.NEXT_PUBLIC_Url : "",
@@ -76,7 +76,7 @@ export default function Cloakroom() {
 
   const {
     images: rembgBackImages,
-    loading: loading3,
+    loading: rembgBackLoading,
     rembg,
   } = useRembg({
     url: process.env.NEXT_PUBLIC_Url? process.env.NEXT_PUBLIC_Url : "",
@@ -166,6 +166,25 @@ export default function Cloakroom() {
   //   }
   // }, [generatedImages2]);
 
+      //监听图片传入成功后调用图生图
+  // useEffect(() => {
+  //   if (settings.init_images.length > 0 && settings.init_images[0] !== "") {
+  //     img2img();
+  //   }
+  // }, [settings]);
+
+  // //监听SD图生图接口返回
+  // useEffect(() => {
+  //   if (generatedImages2.length > 0) {
+  //     dispatch(
+  //       rembg_setSettings(
+  //         { ...rembg_settings, 
+  //           input_image: generatedImages2[0],
+  //         })
+  //     );
+  //   }
+  // }, [generatedImages2]);
+
   return (
     <> 
       <div className={`${styles.loaderBg} ${isLoading?"":"opacity-0"}`}>
@@ -175,7 +194,7 @@ export default function Cloakroom() {
           </svg>
         </div>
       </div>
-      {(loading || loading2 || loading3) && (
+      {(txt2imgBackLoading || ExtrasBackLoading || rembgBackLoading) && (
         <div className={`${styles.loaderBg} ${styles.bgMask}`}>
           <div className={`${styles.svgLoader}`}>
             <svg viewBox="0 0 100 100">
