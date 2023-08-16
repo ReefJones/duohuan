@@ -38,6 +38,7 @@ const product = {
 export default function Cloakroom() {
   const [menuTxt, setMenuTxt] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isBuyBtnShow, setIsBuyBtnShow] = useState(false);
   const [BgConfig, setBgConfig] = useState<string>("");
   // const settings = useSelector((state) => state.img2img.settings);
   // const setSettings = setImg2imgSettings;
@@ -144,6 +145,7 @@ export default function Cloakroom() {
   useEffect(() => {
     if (rembgBackImages) {
       setBgConfig(`data:image/png;base64,${rembgBackImages}`);
+      setIsBuyBtnShow(true);
     }
   }, [rembgBackImages]);
 
@@ -214,11 +216,13 @@ export default function Cloakroom() {
             </FloatCard>
           </div>
           <div className={`fixed w-20 h-20 ${isLoading?"":styles.slideInLeft}`}>
-            <FloatCard haveLayout="odel wearing plain">
-              <UserIcon
-                className="pointer-events-none w-12 h-12"
-                aria-hidden="true"
-              />
+            <FloatCard>
+              <Link href={"/Gallery"} >
+                <UserIcon
+                  className="pointer-events-none w-12 h-12"
+                  aria-hidden="true"
+                />
+              </Link>
             </FloatCard>
           </div>
           <div className={`fixed w-20 h-20 ${isLoading?"":styles.slideInLeft}`}>
@@ -335,7 +339,7 @@ export default function Cloakroom() {
             </div>
           </div>
         </div>
-        <div className="absolute top-6 right-6 w-64 h-28 mt-5 flex justify-center items-center overflow-hidden">
+        <div className={`absolute bottom-1/4 right-0 w-full h-28 mt-5 flex justify-center items-center overflow-hidden duration-1000 ${isBuyBtnShow?"":"opacity-0 invisible"}`}>
           <Link href={"/product/1"} className={`relative px-8 py-6 text-3xl overflow-hidden ${styles.LightEdgeBtn_w}`} >
             Buy Now
           </Link>
