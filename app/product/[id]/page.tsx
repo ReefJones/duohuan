@@ -64,7 +64,7 @@ export default function Home() {
   const [selectedSize, setSelectedSize] = useState(product.sizes[2])
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between px-24 pt-8">
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm">
         {/* Image gallery */}
         <div className="mx-auto mt-6 max-w-2xl grid max-w-7xl grid-cols-3 gap-x-8 px-8">
@@ -241,8 +241,7 @@ export default function Home() {
               </button>
             </form>
           </div>
-          <div className="py-10">
-            {/* Description and details */}
+          {/* <div className="py-10">
             <div>
               <h3 className="sr-only">Description</h3>
 
@@ -272,7 +271,7 @@ export default function Home() {
                 <p className="text-xl text-white">{product.details}</p>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </main>

@@ -8,7 +8,7 @@ export const useGalleryImages = ({ url }: { url: string}) => {
   const getGalleryImages = async () => {
     setLoading(true);
     try {
-      const res = await fetch("api/test", {
+      const res = await fetch("api/getOutputsImages", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

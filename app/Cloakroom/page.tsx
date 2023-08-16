@@ -10,7 +10,7 @@ import { useExtrasSingleImage } from "../hook/useExtrasSingleImage.hook"
 import { setSettings as setImg2imgSettings } from "../redux/Features/Img2imgState/Img2imgSlice";
 import { setSettings as setRembgSettings } from "../redux/Features/rembg/rembgSlice";
 import { setSettings as setExtrasSingleImageSettings } from "../redux/Features/ExtrasSingleImage/ExtrasSingleImageslice";
-import { FaceSmileIcon, HeartIcon, ClipboardIcon, UserIcon, UsersIcon } from '@heroicons/react/24/outline'
+import { FaceSmileIcon, HeartIcon, ClipboardIcon, UserIcon, UsersIcon, ShoppingCartIcon } from '@heroicons/react/24/outline'
 import MenuButtonList from "../component/MenuButtonList";
 import FloatCard from "../component/FloatCard";
 import MessageSwiper from "../component/MessageSwiper";
@@ -251,12 +251,14 @@ export default function Cloakroom() {
               />
             </FloatCard>
           </div>
-          <div className={`fixed w-20 h-20 ${isLoading?"":styles.slideInRight}`}>
-            <FloatCard haveLayout="odel wearing plain">
-              <UserIcon
-                className="pointer-events-none w-12 h-12"
-                aria-hidden="true"
-              />
+          <div className={`fixed w-20 h-20 duration-1000 ${isBuyBtnShow?"":"opacity-0 invisible"}`}>
+            <FloatCard>
+              <Link href={"/product/1"} >
+                <ShoppingCartIcon
+                  className="pointer-events-none w-12 h-12"
+                  aria-hidden="true"
+                />
+              </Link>
             </FloatCard>
           </div>
         </div>
@@ -339,11 +341,11 @@ export default function Cloakroom() {
             </div>
           </div>
         </div>
-        <div className={`absolute bottom-1/4 right-0 w-full h-28 mt-5 flex justify-center items-center overflow-hidden duration-1000 ${isBuyBtnShow?"":"opacity-0 invisible"}`}>
+        {/* <div className={`absolute bottom-1/4 right-0 w-full h-28 mt-5 flex justify-center items-center overflow-hidden duration-1000 ${isBuyBtnShow?"":"opacity-0 invisible"}`}>
           <Link href={"/product/1"} className={`relative px-8 py-6 text-3xl overflow-hidden ${styles.LightEdgeBtn_w}`} >
             Buy Now
           </Link>
-        </div> 
+        </div>  */}
         <div className={`absolute inset-x-0 inset-y-0 ${styles.bgMask} ${menuTxt===""?styles.modaleHidden:""}`} onClick={bgMaskClick}></div>
       </div>
     </>
