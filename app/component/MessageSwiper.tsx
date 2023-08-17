@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { ChatBubbleLeftRightIcon } from '@heroicons/react/24/solid'
 import styles from "../styles/LightEdge.module.css"
 import 'swiper/css';
+import Image from 'next/image';
 
 const messages = [
     {
@@ -65,7 +66,14 @@ export default function MessageSwiper(){
                         </div>
                         <p className={`${styles.infotMargin}`}>{message.text}</p>
                         <div className={`flex justify-center items-center ${styles.testimonialImg}`}>
-                            <img src={message.photo} alt="testimonial picture"/>
+                            <Image
+                                src={message.photo}
+                                alt="testimonial picture"
+                                style={{width: `100%`}}
+                                width={100}
+                                height={100}
+                                priority
+                            />
                         </div>
                         <div className={`${styles.userInfo}`}>
                             <p className={`${styles.testimonialName}`}>{message.name}</p>

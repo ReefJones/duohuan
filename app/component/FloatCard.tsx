@@ -4,6 +4,8 @@ import Link from "next/link";
 import { FloatCardProps } from "../Types/FloatCard";
 
 export default function FloatCard({cardType, haveLayout, noBorder, handleClick, children}: FloatCardProps) {
+  const [CardType, setCardType] = useState<any>(cardType);
+  const [NoBorder, setNoBorder] = useState<any>(noBorder);
   const [cardTypeCss, setCardTypeCss] = useState<string>(styles.FloatCard);
   const [customBorderCss, setCustomBorderCss] = useState<string>("");
   
@@ -14,10 +16,10 @@ export default function FloatCard({cardType, haveLayout, noBorder, handleClick, 
   }
 
   useEffect(() => {
-    if (cardType === 'text') {
+    if (CardType === 'text') {
       setCardTypeCss(styles.TxtCard);
     }
-    if (noBorder) {
+    if (NoBorder) {
       setCustomBorderCss(styles.noBorder);
     }
   }, []);

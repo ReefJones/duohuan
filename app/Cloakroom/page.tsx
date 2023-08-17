@@ -16,7 +16,7 @@ import FloatCard from "../component/FloatCard";
 import MessageSwiper from "../component/MessageSwiper";
 import styles from "../styles/LightEdge.module.css"
 import Link from "next/link";
-
+import Image from 'next/image';
 
 const product = {
   cards: [
@@ -51,7 +51,7 @@ export default function Cloakroom() {
   const {
     images: txt2imgBackImages,
     loading: txt2imgBackLoading,
-    txt2img,
+    txt2img
   } = useTxt2img({
     url: process.env.NEXT_PUBLIC_Url? process.env.NEXT_PUBLIC_Url : "",
     port: "",
@@ -69,7 +69,7 @@ export default function Cloakroom() {
   const {
     images: ExtrasBackImages,
     loading: ExtrasBackLoading,
-    ExtrasSingleImage,
+    ExtrasSingleImage
   } = useExtrasSingleImage({
     url: process.env.NEXT_PUBLIC_Url? process.env.NEXT_PUBLIC_Url : "",
     port: "",
@@ -78,7 +78,7 @@ export default function Cloakroom() {
   const {
     images: rembgBackImages,
     loading: rembgBackLoading,
-    rembg,
+    rembg
   } = useRembg({
     url: process.env.NEXT_PUBLIC_Url? process.env.NEXT_PUBLIC_Url : "",
     port: "",
@@ -278,12 +278,19 @@ export default function Cloakroom() {
         </div>
         <div className={`absolute inset-x-0 inset-y-0 rounded-3xl overflow-hidden ${styles.modal} ${menuTxt==="volume"?"":styles.modaleHidden}`}>
           <div className={`relative ${styles.glassModal}`}>
-            <img src="/video-bg.jpg" alt="video" width={"100%"}/>
+            <Image
+              src="/video-bg.jpg"
+              alt="video"
+              style={{width: `100%`}}
+              width={1920}
+              height={666}
+              priority
+            />
             <div className="relative py-16">
               <div className="flex justify-center items-center">
                 <div className={`text-left w-3/5 py-2 pl-2 pr-8 ${menuTxt==="volume"?styles.slideInLeft:""}`}>
                   <h3 className={`${styles.glassCardTitle}`}>Stats & Features</h3>
-                  <p className={`${styles.glassCardDetail}`}>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit.</p>
+                  <p className={`${styles.glassCardDetail}`}>This is Photoshop version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit.</p>
                 </div>
                 <div className={`text-center w-2/5 grid grid-cols-3 gap-x-6 ${menuTxt==="volume"?styles.slideInRight:""}`}>
                   <div className={`col-span-1 ${styles.parallaxBox}`}>
@@ -335,7 +342,14 @@ export default function Cloakroom() {
                   </div>
                 </div>
                 <div className={`text-center w-2/5 ${menuTxt==="shopping"?styles.slideInRight:""}`}>
-                  <img src="/contact-product.png" alt="video" width={"100%"}/>
+                  <Image
+                    src="/contact-product.png"
+                    alt="video"
+                    style={{width: `100%`}}
+                    width={364}
+                    height={530}
+                    priority
+                  />
                 </div>
               </div>
             </div>
