@@ -43,7 +43,8 @@ export const GET = (req: NextRequest) =>{
     }
 
     // 调用函数来提取图片
-    const txt2imgImagesDir = './outputs/txt2img-images';
+    // const txt2imgImagesDir = './outputs/txt2img-images';
+    const txt2imgImagesDir = process.env.NEXT_PUBLIC_OUTPUTS_DIRECTORY;
     extractImagesFromFolder(txt2imgImagesDir);
 
     //  成功返回
