@@ -35,7 +35,7 @@ export default function Home() {
         />
       </div>
       <div className={`${styles.content}`}>
-        <h2>多焕衣帽间</h2>
+        <h2>多焕魔镜</h2>
         <p>The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming limited release.</p>
         <div className="w-64 h-28 mt-5 flex justify-center items-center overflow-hidden">
           <Link href={"/Cloakroom"} className={`relative px-8 py-6 text-3xl overflow-hidden ${styles.LightEdgeBtn_w}`} >
