@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useGalleryImages } from "../hook/useGalleryImages.hook"
 import GallerySwiper from "../component/GallerySwiper";
+import GestureComponent from "../component/GestureComponent";
 
 export default function Gallery() {
   const {
@@ -18,7 +19,9 @@ export default function Gallery() {
 
   return (
     <>
-      <GallerySwiper imageArry={images}></GallerySwiper>
+      <GestureComponent>
+        <GallerySwiper imageArry={images}></GallerySwiper>
+      </GestureComponent>
     </>
   )
 }

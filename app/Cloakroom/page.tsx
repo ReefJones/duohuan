@@ -14,6 +14,7 @@ import { FaceSmileIcon, HeartIcon, ClipboardIcon, UserIcon, UsersIcon, ShoppingC
 import MenuButtonList from "../component/MenuButtonList";
 import FloatCard from "../component/FloatCard";
 import MessageSwiper from "../component/MessageSwiper";
+import GestureComponent from "../component/GestureComponent";
 import styles from "../styles/LightEdge.module.css"
 import Link from "next/link";
 import Image from 'next/image';
