@@ -45,16 +45,22 @@ export const GET = (req: NextRequest) =>{
     // 调用函数来提取图片
     // const txt2imgImagesDir = './outputs/txt2img-images';
     const fs = require('fs');
-    const txt2imgImagesDir = process.env.NEXT_PUBLIC_OUTPUTS_DIRECTORY;
-    try {
-        fs.readdirSync(txt2imgImagesDir);
-      } catch (error) {
-        if (error instanceof Error) {
-          fs.mkdirSync(txt2imgImagesDir);
-        } else {
-          throw error;
-        }
-      }
+    const txt2imgImagesDir = './outputs/txt2img-images';
+    // const txt2imgImagesDir = process.env.NEXT_PUBLIC_OUTPUTS_DIRECTORY;
+    // try {
+    //     fs.readdirSync(txt2imgImagesDir);
+    //   } catch (error) {
+    //     if (error instanceof Error) {
+    //       fs.mkdirSync(txt2imgImagesDir);
+    //     } else {
+    //       throw error;
+    //     }
+    //   }
+    // 确保目录存在
+    if (!fs.existsSync(txt2imgImagesDir)) {
+        fs.mkdirSync(txt2imgImagesDir, { recursive: true });
+    }
+    // 继续其他操作...
     extractImagesFromFolder(txt2imgImagesDir);
 
     //  成功返回
