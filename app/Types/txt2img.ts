@@ -41,4 +41,9 @@ export interface Txt2imgInterface {
   send_images?: boolean;
   save_images?: boolean;
   alwayson_scripts?: Object;
+  hr_sampler_name?: string;
+  hr_prompt?: string;
+  hr_negative_prompt?: string;
+  clip_skip: number;
+  extra_generation_params?: any;
 }

@@ -1,8 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-export const setOutputsImages = ({ imageArry, seedNum }: { imageArry: any[]; seedNum: any }) => {
-
+export const setOutputsImages = ({ imageArry, seedNum, folderName }: { imageArry: any[]; seedNum: any; folderName: any }) => {
     // 创建outputs文件夹
     const outputsDir = './outputs';
     if (!fs.existsSync(outputsDir)) {
@@ -11,7 +10,7 @@ export const setOutputsImages = ({ imageArry, seedNum }: { imageArry: any[]; see
     // 获取当前日期
     const currentDate = new Date().toISOString().split('T')[0];
     // 拼接txt2img-images文件夹路径
-    const txt2imgImagesDir = path.join(outputsDir, 'txt2img-images', currentDate);
+    const txt2imgImagesDir = path.join(outputsDir, folderName, currentDate);
     // 创建txt2img-images文件夹
     if (!fs.existsSync(txt2imgImagesDir)) {
         fs.mkdirSync(txt2imgImagesDir, { recursive: true });
@@ -21,11 +20,17 @@ export const setOutputsImages = ({ imageArry, seedNum }: { imageArry: any[]; see
     // 获取seed值
     const seed = seedNum;
     // 生成文件名的计数器
-    let counter = 0;
+    const filesInDirectory = fs.readdirSync(txt2imgImagesDir);
+    const counter = filesInDirectory.length + 1;
     // 循环保存每一张图片
     for (const base64Image of images) {
         // 生成文件名
-        const fileName = `${counter.toString().padStart(5, '0')}-${seed}.png`;
+        let fileName = "";
+        if (seed && seed !== 0) {
+            fileName = `${counter.toString().padStart(5, '0')}-${seed}.png`;
+        } else {
+            fileName = `${counter.toString().padStart(5, '0')}.png`;
+        }
         // 将base64图片数据解码为Buffer对象
         const imageBuffer = Buffer.from(base64Image, 'base64');
         // 拼接文件保存路径
@@ -33,11 +38,10 @@ export const setOutputsImages = ({ imageArry, seedNum }: { imageArry: any[]; see
         // 将图片数据写入文件
         fs.writeFile(filePath, imageBuffer, (err: any) => {
             if (err) {
-            console.error(`保存图片 ${fileName} 失败:`, err);
+                console.error(`保存图片 ${fileName} 失败:`, err);
             } else {
-            console.log(`图片 ${fileName} 已保存至 ${filePath}`);
+                console.log(`图片 ${fileName} 已保存至 ${filePath}`);
             }
         });
-        counter++;
     }
 };

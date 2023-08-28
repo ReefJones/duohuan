@@ -37,10 +37,11 @@ export async function POST(req: NextRequest) {
       "Authorization": process.env.NEXT_PUBLIC_Authorization ? process.env.NEXT_PUBLIC_Authorization : ''
     },
     data: JSON.stringify(body),
-    timeout: 600000, // 设置超时时间为10分钟（600,000毫秒）
+    timeout: 3600000, // 1小时的毫秒数
   });
 
   const img2imgResponseJson = await img2imgResponse.data;
+  console.log("rembgResponseJson", img2imgResponseJson);
 
   // console.log("img2imgResponseJson in api", img2imgResponseJson);
   if (img2imgResponseJson.error) {

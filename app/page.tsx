@@ -24,13 +24,13 @@ const product = {
 export default function Home() {
   return (
     <div className={`relative w-4/5 h-3/5 flex justify-center items-center ${styles.card}`}>
-      <div className={`absolute top-0 left-0 w-40 h-45 flex justify-center items-center ${styles.circle}`}>
+      <div className={`absolute top-0 left-0 w-30 h-30 flex justify-center items-center ${styles.circle}`}>
         <Image
           src="/vercel.svg"
           alt="Vercel Logo"
           className={`${styles.logo}`}
-          width={100}
-          height={100}
+          width={30}
+          height={30}
           priority
         />
       </div>

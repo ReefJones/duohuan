@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
             "Authorization": process.env.NEXT_PUBLIC_Authorization ? process.env.NEXT_PUBLIC_Authorization : ''
         },
         data: JSON.stringify(body),
-        timeout: 600000, // 设置超时时间为10分钟（600,000毫秒）
+        timeout: 3600000, // 1小时的毫秒数
     });
 
     const extrasSingleImageResponseJson = await extrasSingleImageResponse.data;

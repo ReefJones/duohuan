@@ -251,7 +251,7 @@ export default function Cloakroom() {
               />
             </FloatCard>
           </div>
-          <div className={`fixed w-20 h-20 duration-1000 ${isBuyBtnShow?"":"opacity-0 invisible"}`}>
+          <div className={`fixed w-20 h-20 ${isLoading?"":styles.slideInRight}`}>
             <FloatCard>
               <Link href={"/product/1"} >
                 <ShoppingCartIcon
