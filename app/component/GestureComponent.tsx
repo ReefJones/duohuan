@@ -30,12 +30,11 @@ export default function GestureComponent({
       // 在拖动过程中的处理逻辑
       console.log('Drag:', down, movement);
     },
-    onPinch: ({touches}) => {
+    onPinch: ({movement}) => {
       // 返回上一页
-      alert(maxTouchPoints+","+touches);
-      // if(touches == 5 && maxTouchPoints != null){
-      //   router.back();
-      // }
+      if(movement[0] != 1 && movement[1] != 0){
+        router.back();
+      };
     },
   });
 
